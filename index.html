@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REDACTR Download</title>
+  <meta name="description" content="Download the latest REDACTR installer for Windows." />
+  <style>
+    :root {
+      --bg: #061839;
+      --card: #112b63;
+      --panel: #18366f;
+      --text: #ffffff;
+      --muted: #b9c9e9;
+      --accent: #d7040f;
+      --accent-hover: #f11b26;
+      --line: rgba(255,255,255,.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    .card {
+      width: min(520px, 100%);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 38px 32px 30px;
+      text-align: center;
+      box-shadow: 0 18px 50px rgba(0,0,0,.22);
+    }
+    .mark {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: #081b3e;
+      border: 1px solid var(--line);
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mark::after {
+      content: "";
+      position: absolute;
+      width: 72px;
+      height: 9px;
+      background: var(--accent);
+      transform: rotate(-18deg);
+      border-radius: 99px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: .5px;
+    }
+    .tagline {
+      margin: 10px auto 26px;
+      max-width: 410px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 16px;
+    }
+    .download {
+      display: inline-block;
+      width: min(270px, 100%);
+      padding: 15px 22px;
+      border-radius: 11px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 17px;
+      transition: transform .08s ease, background .15s ease;
+    }
+    .download:hover { background: var(--accent-hover); }
+    .download:active { transform: translateY(1px); }
+    .download.disabled { opacity: .65; pointer-events: none; }
+    .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .notice {
+      margin-top: 28px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      background: var(--panel);
+      color: #d9e5ff;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .notice strong { color: #fff; }
+    .footer {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer a { color: #dce7ff; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="mark" aria-hidden="true">R</div>
+    <h1>REDACTR</h1>
+    <p class="tagline">Blur video. Bleep audio. On-air safe.</p>
+
+    <a id="downloadBtn" class="download disabled" href="https://github.com/spencertrabbold/REDACTR-Releases/releases/latest">Finding latest installer…</a>
+    <div id="meta" class="meta">Windows installer</div>
+
+    <div class="notice">
+      <strong>First run:</strong> Windows SmartScreen may show an “unrecognized publisher” warning for an unsigned internal build. Choose <strong>More info → Run anyway</strong> if your organization permits it.
+    </div>
+
+    <div class="footer">
+      REDACTR · <a href="https://github.com/spencertrabbold/REDACTR-Releases/releases">All releases</a>
+    </div>
+  </main>
+
+  <script>
+    const latestApi = 'https://api.github.com/repos/spencertrabbold/REDACTR-Releases/releases/latest';
+    const latestPage = 'https://github.com/spencertrabbold/REDACTR-Releases/releases/latest';
+    const button = document.getElementById('downloadBtn');
+    const meta = document.getElementById('meta');
+
+    function humanSize(bytes) {
+      if (!Number.isFinite(bytes) || bytes <= 0) return '';
+      const mb = bytes / (1024 * 1024);
+      return `${Math.round(mb)} MB`;
+    }
+
+    fetch(latestApi, { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(response => {
+        if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
+        return response.json();
+      })
+      .then(release => {
+        const installer = (release.assets || []).find(asset =>
+          asset.name.toLowerCase().endsWith('.exe') &&
+          asset.name.toLowerCase().includes('setup')
+        ) || (release.assets || []).find(asset => asset.name.toLowerCase().endsWith('.exe'));
+
+        if (!installer) throw new Error('No Windows installer asset found');
+
+        button.href = installer.browser_download_url;
+        button.textContent = 'Download for Windows';
+        button.classList.remove('disabled');
+
+        const version = release.tag_name || 'Latest';
+        const size = humanSize(installer.size);
+        meta.textContent = `${version}${size ? ' · ' + size : ''} installer`;
+      })
+      .catch(() => {
+        button.href = latestPage;
+        button.textContent = 'View Latest Release';
+        button.classList.remove('disabled');
+        meta.textContent = 'Latest REDACTR release on GitHub';
+      });
+  </script>
+</body>
+</html>
