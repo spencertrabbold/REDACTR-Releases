@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>REDACTR Download</title>
   <meta name="description" content="Download the latest REDACTR installer for Windows." />
+  <link rel="icon" href="redactr_icon.svg" type="image/svg+xml" />
   <style>
     :root {
       --bg: #061839;
@@ -40,25 +41,8 @@
       width: 96px;
       height: 96px;
       margin: 0 auto 18px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      background: #081b3e;
-      border: 1px solid var(--line);
-      font-size: 52px;
-      font-weight: 900;
-      letter-spacing: -4px;
-      position: relative;
-      overflow: hidden;
-    }
-    .mark::after {
-      content: "";
-      position: absolute;
-      width: 72px;
-      height: 9px;
-      background: var(--accent);
-      transform: rotate(-18deg);
-      border-radius: 99px;
+      display: block;
+      object-fit: contain;
     }
     h1 {
       margin: 0;
@@ -113,7 +97,7 @@
 </head>
 <body>
   <main class="card">
-    <div class="mark" aria-hidden="true">R</div>
+    <img class="mark" src="redactr_icon.svg" alt="REDACTR icon" />
     <h1>REDACTR</h1>
     <p class="tagline">Blur video. Bleep audio. On-air safe.</p>
 
