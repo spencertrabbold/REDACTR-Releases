@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>REDACTR Download</title>
   <meta name="description" content="Download the latest REDACTR installer for Windows." />
-  <link rel="icon" href="https://raw.githubusercontent.com/spencertrabbold/REDACTR-Releases/main/redactr_icon.png?v=3" type="image/png" />
+  <link rel="icon" href="redactr_icon.png" type="image/png" />
   <style>
     :root {
       --bg: #061839;
@@ -42,7 +42,6 @@
       height: 96px;
       margin: 0 auto 18px;
       display: block;
-      object-fit: contain;
     }
     h1 {
       margin: 0;
@@ -97,11 +96,27 @@
 </head>
 <body>
   <main class="card">
-    <img class="mark" src="https://raw.githubusercontent.com/spencertrabbold/REDACTR-Releases/main/redactr_icon.png?v=3" alt="REDACTR icon" />
+    <svg class="mark" viewBox="0 0 256 256" role="img" aria-label="REDACTR icon" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="iconBg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1b1b1b" />
+          <stop offset="1" stop-color="#050505" />
+        </linearGradient>
+        <linearGradient id="redSlash" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#d7040f" />
+          <stop offset="1" stop-color="#ff2730" />
+        </linearGradient>
+      </defs>
+      <rect x="7" y="7" width="242" height="242" rx="38" fill="url(#iconBg)" />
+      <rect x="9" y="9" width="238" height="238" rx="36" fill="none" stroke="#333" stroke-width="3" />
+      <path d="M60 72h92c31 0 55 23 55 53s-24 53-55 53h-33l-24-39h57c9 0 16-6 16-14s-7-14-16-14H78L60 72z" fill="#fff" />
+      <path d="M118 139h43l43 72h-43l-43-72z" fill="url(#redSlash)" />
+      <path d="M72 72h80c31 0 55 23 55 53s-24 53-55 53h-33l-24-39h57c9 0 16-6 16-14s-7-14-16-14H91L72 72z" fill="#fff" />
+    </svg>
     <h1>REDACTR</h1>
     <p class="tagline">Blur video. Bleep audio. On-air safe.</p>
 
-    <a id="downloadBtn" class="download disabled" href="https://github.com/spencertrabbold/REDACTR-Releases/releases/latest">Finding latest installer…</a>
+    <a id="downloadBtn" class="download disabled" href="https://github.com/spencertrabbold/REDACTR-Releases/releases/latest">Finding latest installer...</a>
     <div id="meta" class="meta">Windows installer</div>
 
     <div class="notice">
